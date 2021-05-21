@@ -26,6 +26,7 @@ router.post('/', catchAsync(async (req, res) => {
     const comment = await Comment.create(req.body.comment)
     post.comments.push(comment._id)
     await post.save()
+    req.flash('success', 'Successfully Added A Comment!')
     res.redirect(`/posts/${post._id}`)
 }))
 

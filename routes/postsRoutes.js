@@ -34,6 +34,7 @@ router.get('/new', (req, res) => {
 router.post('/', postValidation, catchAsync(async (req, res, next) => {
     const post = new Post(req.body.post)
     await post.save();
+    req.flash('success', 'Added a new Question!')
     res.redirect('/posts')
 }))
 
@@ -42,6 +43,10 @@ router.post('/', postValidation, catchAsync(async (req, res, next) => {
 router.get('/:id', catchAsync(async (req, res, next) => {
     const { id } = req.params;
     const post = await Post.findById(id).populate('comments')
+    if (!post) {
+        req.flash('error', 'Post Not Found!')
+        return res.redirect('/posts')
+    }
     res.render('posts/show', { post })
 }))
 
@@ -58,6 +63,7 @@ router.put('/:id', postValidation, catchAsync(async (req, res) => {
     const { id } = req.params;
     const { post } = req.body;
     await Post.findByIdAndUpdate(id, post)
+    req.flash('success', 'Successfully Updated Your Question!')
     res.redirect(`/posts/${id}`)
 }))
 
@@ -67,6 +73,7 @@ router.put('/:id', postValidation, catchAsync(async (req, res) => {
 router.delete('/:id', catchAsync(async (req, res) => {
     const { id } = req.params;
     const post = await Post.findByIdAndDelete(id);
+    req.flash('success', 'Successfully deleted your Question!')
     res.redirect('/posts')
 }))
 
