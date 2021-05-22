@@ -53,4 +53,5 @@ module.exports.isCommentAuthor = async (req, res, next) => {
         req.flash('error', 'You are not authorized to delete this comment!')
         return res.redirect(`/posts/${id}`)
     }
+    next();
 }

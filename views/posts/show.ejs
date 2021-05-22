@@ -24,12 +24,12 @@
                     </h6>
                 </div>
                 <ul class="list-group list-group-flush mb-3">
-                    <li class="list-group-item display-6"><i class="fas fa-arrow-up"></i>
+                    <button class="vote bg-success fs-4"><i class="fas fa-arrow-up"></i>
                         <%= post.upVotes %>
-                    </li>
-                    <li class="list-group-item display-6"><i class="fas fa-arrow-down"> </i>
+                    </button>
+                    <button class="vote bg-primary fs-4"><i class="fas fa-arrow-down"> </i>
                         <%= post.downVotes %>
-                    </li>
+                            </li>
                 </ul>
                 <% if(currentUser && post.author.equals(currentUser._id)) {%>
                     <div class="card-body mb-3">
@@ -68,7 +68,7 @@
                         <h5 class="mb-3">Comment: <p class="fw-light">
                                 <%= comment.body %>
                             </p>
-                            <h6 class="card-subtitle mb-2 text-muted">
+                            <h6 class="card-subtitle mb-2 text-success">
                                 By <%= comment.author.username %>
                             </h6>
                         </h5>
