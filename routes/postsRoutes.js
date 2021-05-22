@@ -3,7 +3,8 @@ const router = express.Router();
 const expressError = require('../utilities/expressError')
 const { catchAsync } = require('../utilities/catchAsync')
 const Post = require('../models/posts')
-const { isLoggedIn, postValidation, isAuthor } = require('../middlewares')
+const { isLoggedIn, postValidation, isAuthor } = require('../middlewares');
+const { populate } = require('../models/posts');
 
 
 
@@ -31,7 +32,12 @@ router.post('/', isLoggedIn, postValidation, catchAsync(async (req, res, next) =
 
 router.get('/:id', catchAsync(async (req, res, next) => {
     const { id } = req.params;
-    const post = await Post.findById(id).populate('comments').populate('author')
+    const post = await Post.findById(id).populate({
+        path: 'comments',
+        populate: {
+            path: 'author'
+        }
+    }).populate('author')
     if (!post) {
         req.flash('error', 'Post Not Found!')
         return res.redirect('/posts')

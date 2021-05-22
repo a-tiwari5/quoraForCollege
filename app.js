@@ -12,7 +12,7 @@ const User = require('./models/users')
 const passport = require('passport')
 const LocalStrategy = require('passport-local')
 
-mongoose.connect('mongodb://localhost:27017/Quora', { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false });
+mongoose.connect('mongodb://localhost:27017/Quora', { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true });
 db.on('error', console.error.bind(console, 'CONNECTION PROBLEM'))
 db.once('open', () => {
     console.log("CONNECTED TO THE DATABASE")

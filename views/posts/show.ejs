@@ -43,22 +43,24 @@
         </div>
         <div class="col-md-6">
             <div class="mb-3">
-                <h1 class="display-3 text-center">Comments</h1>
-                <form class="needs-validation" novalidate method="POST" action="/posts/<%=post._id%>/comments">
-                    <div class="mb-3">
-                        <label class="form-label display-6" for="body">Leave a Comment</label>
-                        <br>
-                        <textarea class="form-control" type="text" name="comment[body]" id="body"
-                            placeholder="Write a Comment" rows="5" required></textarea>
-                        <div class="valid-feedback">
-                            Looks Good!
+                <% if(currentUser){ %>
+                    <h1 class="display-3 text-center">Comments</h1>
+                    <form class="needs-validation" novalidate method="POST" action="/posts/<%=post._id%>/comments">
+                        <div class="mb-3">
+                            <label class="form-label display-6" for="body">Leave a Comment</label>
+                            <br>
+                            <textarea class="form-control" type="text" name="comment[body]" id="body"
+                                placeholder="Write a Comment" rows="5" required></textarea>
+                            <div class="valid-feedback">
+                                Looks Good!
+                            </div>
+                            <div class="invalid-feedback">
+                                Write Something
+                            </div>
                         </div>
-                        <div class="invalid-feedback">
-                            Write Something
-                        </div>
-                    </div>
-                    <button class="btn btn-primary">Send</button>
-                </form>
+                        <button class="btn btn-primary">Send</button>
+                    </form>
+                    <% } %>
             </div>
             <% for (let comment of post.comments ){ %>
                 <div class="card mb-3">
@@ -66,13 +68,21 @@
                         <h5 class="mb-3">Comment: <p class="fw-light">
                                 <%= comment.body %>
                             </p>
+                            <h6 class="card-subtitle mb-2 text-muted">
+                                By <%= comment.author.username %>
+                            </h6>
                         </h5>
-                        <form method="POST" action="/posts/<%= post._id %>/comments/<%= comment._id%>?_method=DELETE">
-                            <button class="btn btn-sm btn-danger">Delete</button>
-                        </form>
-                        <h6 class="card-subtitle mb-2 text-muted">
-                            <%= comment.createdAt %>
-                        </h6>
+                        <% if(currentUser && comment.author.equals(currentUser._id)){%>
+                            <form method="POST"
+                                action="/posts/<%= post._id %>/comments/<%= comment._id%>?_method=DELETE">
+                                <button class="btn btn-sm btn-danger">Delete</button>
+                            </form>
+                            <% } %>
+                                <h6 class="card-subtitle mb-2 text-muted">
+                                    <%= comment.createdAt %>
+                                </h6>
+
+
                     </div>
                 </div>
                 <% } %>

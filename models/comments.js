@@ -5,6 +5,10 @@ const commentSchema = new Schema({
     body:
     {
         type: String,
+    },
+    author: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
     }
 
 }, { timestamps: true })
