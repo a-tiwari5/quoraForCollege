@@ -14,8 +14,10 @@
 
 .bg-dark{
     background-color: #555;
-    color: #333;
+    color: #fff;
 }
+
+
 
 
 
@@ -25,4 +27,10 @@
     text-decoration: none;
     border: none;
     border-radius: 5px;
+}
+
+.btn-light{
+    background-color: #202020;
+    opacity: .9;
+    color: #000;
 }
